@@ -4,7 +4,7 @@ class StartScreen extends StatelessWidget {
   const StartScreen(this.screenChange, {super.key});
 
   final void Function() screenChange;
-  // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return Center(

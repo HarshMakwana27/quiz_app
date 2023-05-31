@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:secondapp/answer_button.dart';
 import 'package:secondapp/questions/questions.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class QuestionsScreen extends StatefulWidget {
-  const QuestionsScreen({super.key});
+  const QuestionsScreen({super.key, required this.onSelectAnswer});
 
+  final void Function(String answer) onSelectAnswer;
   @override
   State<QuestionsScreen> createState() {
     return _QuestionsScreenState();
@@ -14,9 +16,10 @@ class QuestionsScreen extends StatefulWidget {
 class _QuestionsScreenState extends State<QuestionsScreen> {
   var currentQuestionNumber = 0;
 
-  void changeQuestion() {
+  void changeQuestion(String selectedAnswer) {
+    widget.onSelectAnswer(selectedAnswer);
     setState(() {
-      currentQuestionNumber = currentQuestionNumber + 1;
+      currentQuestionNumber++;
     });
   }
 
@@ -25,27 +28,27 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
     final currentQuestion = questions[currentQuestionNumber];
 
     return Center(
-      child: Container(
-        padding: const EdgeInsets.all(40),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              currentQuestion.text,
-              style: const TextStyle(
-                fontSize: 25,
-                color: Color.fromARGB(255, 0, 0, 0),
-              ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            currentQuestion.text,
+            style: GoogleFonts.poppins(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
             ),
-            const SizedBox(height: 30),
-            ...currentQuestion.getShuffledAnswers().map(
-              (answer) {
-                return AnswerButton(answer, changeQuestion);
-              },
-            ),
-          ],
-        ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 50),
+          ...currentQuestion.getShuffledAnswers().map(
+            (answer) {
+              return AnswerButton(answer, () {
+                changeQuestion(answer);
+              });
+            },
+          ),
+        ],
       ),
     );
   }
