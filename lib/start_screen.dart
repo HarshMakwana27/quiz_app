@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:secondapp/colors/dark_theme.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen(this.screenChange, {super.key});
@@ -12,28 +13,28 @@ class StartScreen extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Image.asset(
-            'assets/images/logo.png',
-            width: 300.0,
+            'assets/images/logoo.png',
+            width: 200.0,
           ),
           const SizedBox(height: 10),
-          const Text(
+          Text(
             'Quizz-it',
             style: TextStyle(
-                fontFamily: 'Aoboshi',
-                fontSize: 80,
-                color: Color.fromARGB(255, 30, 3, 3)),
+              fontFamily: 'Aoboshi',
+              fontSize: 80,
+              color: darkTheme.onBackground,
+            ),
           ),
           const SizedBox(height: 100),
-          OutlinedButton.icon(
+          OutlinedButton(
             onPressed: () {
               screenChange();
             },
             style: OutlinedButton.styleFrom(
-              backgroundColor: const Color.fromARGB(255, 8, 51, 67),
-              foregroundColor: Colors.white,
+              backgroundColor: darkTheme.secondary,
+              foregroundColor: darkTheme.onPrimary,
             ),
-            icon: const Icon(Icons.start_outlined),
-            label: const Text("Start a Quiz"),
+            child: const Text("Start a Quiz"),
           )
         ],
       ),

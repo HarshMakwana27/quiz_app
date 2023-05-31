@@ -3,6 +3,7 @@ import 'package:secondapp/result_screen.dart';
 import 'package:secondapp/start_screen.dart';
 import 'package:secondapp/questions_screen.dart';
 import 'package:secondapp/questions/questions.dart';
+import 'package:secondapp/colors/dark_theme.dart';
 
 class Quiz extends StatefulWidget {
   const Quiz({super.key});
@@ -13,9 +14,16 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
-  final List<String> selectedAnswer = [];
+  List<String> selectedAnswer = [];
 
   var activeScreen = 'start-screen';
+
+  void restartQuiz() {
+    setState(() {
+      selectedAnswer = [];
+      activeScreen = 'question-screen';
+    });
+  }
 
   void screenChange() {
     setState(() {
@@ -40,16 +48,17 @@ class _QuizState extends State<Quiz> {
     if (activeScreen == 'question-screen') {
       screenWidget = QuestionsScreen(onSelectAnswer: chooseAnswer);
     }
+
     if (activeScreen == 'result-screen') {
-      screenWidget = ResultScreen(selectedAnswer);
+      screenWidget = ResultScreen(selectedAnswer, restartQuiz);
     }
     return MaterialApp(
       home: Scaffold(
         body: Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             gradient: LinearGradient(colors: [
-              Color.fromARGB(255, 11, 61, 102),
-              Color.fromARGB(255, 12, 55, 72),
+              darkTheme.background,
+              darkTheme.background,
             ], begin: Alignment.topLeft, end: Alignment.bottomRight),
           ),
           child: screenWidget,

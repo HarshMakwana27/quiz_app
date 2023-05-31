@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:secondapp/colors/dark_theme.dart';
+import 'package:secondapp/question_box.dart';
 
 class SummaryBox extends StatelessWidget {
   const SummaryBox(this.summaryData, {super.key});
@@ -13,19 +15,14 @@ class SummaryBox extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: summaryData.map((data) {
+            bool isTrue() {
+              return data['selected_answer'] == data['correct_answer'];
+            }
+
             return Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                    padding: const EdgeInsets.all(10),
-                    margin: const EdgeInsets.only(right: 10),
-                    decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 0, 255, 51),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Text(
-                      ((data['question_index'] as int) + 1).toString(),
-                    )),
+                QuestionBox(isTrue(), data['question_index'] as int),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,7 +31,7 @@ class SummaryBox extends StatelessWidget {
                         data['question'] as String,
                         style: GoogleFonts.poppins(
                             color: const Color.fromARGB(255, 156, 186, 238),
-                            fontSize: 14),
+                            fontSize: 12),
                       ),
                       Text(
                         data['selected_answer'] as String,
@@ -46,13 +43,14 @@ class SummaryBox extends StatelessWidget {
                       Text(
                         data['correct_answer'] as String,
                         style: GoogleFonts.poppins(
-                          color: const Color.fromARGB(255, 200, 59, 239),
+                          color: darkTheme.primary,
                           fontSize: 10,
                         ),
                       ),
+                      const SizedBox(height: 10),
                     ],
                   ),
-                )
+                ),
               ],
             );
           }).toList(),
